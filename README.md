@@ -1,3 +1,11 @@
+# Adastra Python Task - Dockerized
+
+### WIP
+
+
+---
+
+
 # Adastra Python Task
 
 This project is a pseudo ETL system, designed in *Python*. It was developed
