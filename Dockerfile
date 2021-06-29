@@ -3,15 +3,15 @@ FROM python:3.8-slim
 
 WORKDIR /usr/src/app
 
-# Environment variables
-## default data source is 'Simulation'
-ENV DATASOURCE="1"
-## default data sink is 'Console' with the following format
-ENV DATASINK="1\n(console)::key: {} | value: {} | ts: {}"
-
 # Install Python dependancies
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Environment variables
+## default data source is 'Simulation'
+ENV APTD__DATASOURCE="1"
+## default data sink is 'Console' with the following format
+ENV APTD__DATASINK="1\n(console)::key: {} | value: {} | ts: {}"
 
 # Copy source code into the container
 COPY ./src/ ./src/
@@ -20,4 +20,4 @@ COPY ./database.env ./database.env
 
 # Prepare script input and
 # launch application with prepared input
-CMD echo "1\n${DATASOURCE}\n${DATASINK}\n" | python ./main.py
+CMD echo "1\n${APTD__DATASOURCE}\n${APTD__DATASINK}\n" | python ./main.py
