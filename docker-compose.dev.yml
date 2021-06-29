@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  aptd:
+    stdin_open: true
+    tty: true
+    networks:
+      - app-net
+    environment: 
+      - TERM=xterm-color
+      - APTD__ENV=DEV
+
+  db:
+    restart: always
+    networks:
+      - app-net
+    
+  adminer:
+    image: adminer
+    networks:
+      - app-net
+    ports:
+      - 8080:8080
+
+networks:
+  app-net:
