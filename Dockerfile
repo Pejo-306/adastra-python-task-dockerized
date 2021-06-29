@@ -8,16 +8,18 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Environment variables
+## Runtime environment - DEV, TEST or PROD; MUST be set at runtime
+ENV APTD__ENV=NONE
 ## default data source is 'Simulation'
 ENV APTD__DATASOURCE="1"
 ## default data sink is 'Console' with the following format
 ENV APTD__DATASINK="1\n(console)::key: {} | value: {} | ts: {}"
 
 # Copy source code into the container
+COPY ./docker-entrypoint.sh ./docker-entrypoint.sh
+COPY ./database.env ./database.env
 COPY ./src/ ./src/
 COPY ./main.py ./main.py
-COPY ./database.env ./database.env
 
-# Prepare script input and
-# launch application with prepared input
-CMD echo "1\n${APTD__DATASOURCE}\n${APTD__DATASINK}\n" | python ./main.py
+# Launch application entrypoint
+ENTRYPOINT ["./docker-entrypoint.sh"]
