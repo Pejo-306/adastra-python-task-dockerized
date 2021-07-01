@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  aptd:
+    depends_on: 
+      postgres-db:
+        condition: service_healthy
+    networks: 
+      - test-net
+    environment: 
+      - APTD__ENV=TEST
+  
+  postgres-db:
+    restart: always
+    networks: 
+      - test-net
+
+networks: 
+  test-net:
