@@ -4,9 +4,14 @@ services:
   aptd:
     image: penikolov23/adastra-python-task-dockerized
 
-  db:
+  postgres-db:
     image: postgres
     env_file:
       - database.env
     ports:
       - 5432:5432
+    healthcheck:
+      test: pg_isready -U postgres
+      interval: 10s
+      timeout: 5s 
+      retries: 5

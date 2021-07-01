@@ -2,25 +2,28 @@ version: "3.8"
 
 services:
   aptd:
+    depends_on: 
+      postgres-db:
+        condition: service_healthy
     stdin_open: true
     tty: true
     networks:
-      - app-net
+      - dev-net
     environment: 
       - TERM=xterm-color
       - APTD__ENV=DEV
 
-  db:
+  postgres-db:
     restart: always
     networks:
-      - app-net
+      - dev-net
     
   adminer:
     image: adminer
     networks:
-      - app-net
+      - dev-net
     ports:
       - 8080:8080
 
 networks:
-  app-net:
+  dev-net:
