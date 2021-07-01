@@ -95,16 +95,14 @@ def select_sink() -> Tuple[DataSink, list]:
             print(f">> ", end='')
             dbpassword = input()
             sink_args.append(dbpassword.strip() if len(dbpassword.strip()) else DATABASE_ENV["POSTGRES_PASSWORD"])
-            print("'DB host': (default is '127.0.0.1')")
+            print(f"'DB host': (default is '{DATABASE_ENV['POSTGRES_HOST']}')")
             print(f">> ", end='')
             dbhost = input()
-            if len(dbhost.strip()):  # user has entered custom DB host
-                sink_args.append(dbhost)
-            print("'DB port': (default is '5432')")
+            sink_args.append(dbhost.strip() if len(dbhost.strip()) else DATABASE_ENV["POSTGRES_HOST"])
+            print(f"'DB port': (default is '{DATABASE_ENV['POSTGRES_PORT']}')")
             print(f">> ", end='')
             dbport = input()
-            if len(dbport.strip()):  # user has entered custom DB port
-                sink_args.append(int(dbport))
+            sink_args.append(dbport.strip() if len(dbport.strip()) else DATABASE_ENV["POSTGRES_PORT"])
             valid = True
         else:
             print("Invalid input. Press 'Enter' to continue...")

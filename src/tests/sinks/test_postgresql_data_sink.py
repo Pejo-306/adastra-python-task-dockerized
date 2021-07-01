@@ -12,11 +12,11 @@ from src.sinks.postgresql_data_sink import PostgreSQLDataSink
 class TestPostgreSQLDataSink(TestCase):
 
     def setUp(self):
-        self.dbname = "test_schema"
+        self.dbname = DATABASE_ENV["POSTGRES_TEST_DB"]
         self.dbuser = DATABASE_ENV["POSTGRES_USER"]
         self.dbpassword = DATABASE_ENV["POSTGRES_PASSWORD"]
-        self.dbhost = "127.0.0.1"
-        self.dbport = 5432
+        self.dbhost = DATABASE_ENV["POSTGRES_HOST"]
+        self.dbport = DATABASE_ENV["POSTGRES_PORT"]
         self.sink = PostgreSQLDataSink(self.dbname, self.dbuser, self.dbpassword, self.dbhost, self.dbport)
         try:
             self.con = psycopg2.connect(database=self.dbname, user=self.dbuser, password=self.dbpassword,
