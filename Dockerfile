@@ -17,6 +17,7 @@ ENV APTD__DATASINK="1\n(console)::key: {} | value: {} | ts: {}"
 
 # Copy source code into the container
 COPY ./docker-entrypoint.sh ./docker-entrypoint.sh
+COPY ./input_files ./input_files
 COPY ./database.env ./database.env
 COPY ./src/ ./src/
 COPY ./main.py ./main.py
