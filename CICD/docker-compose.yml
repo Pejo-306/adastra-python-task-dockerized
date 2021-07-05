@@ -30,13 +30,15 @@ services:
     volumes:
       - "./data/gogs:/data"
 
-#  jenkins:
-#    image: jenkins/jenkins:lts
-#    networks: 
-#      - infrastructure-net
-#    ports:
-#      - "8090:8080"
-#      - "50000:50000"
+  jenkins:
+    image: jenkins/jenkins:lts
+    networks: 
+      - infrastructure-net
+    ports:
+      - "8088:8080"
+      - "50000:50000"
+    volumes:
+      - "./data/jenkins:/var/jenkins_home"
 
 networks: 
   infrastructure-net:
