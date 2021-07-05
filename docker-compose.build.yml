@@ -1,0 +1,7 @@
+version: "3.8"
+
+services: 
+  aptd:
+    build:
+      context: .
+      dockerfile: Dockerfile

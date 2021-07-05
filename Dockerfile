@@ -23,4 +23,5 @@ COPY ./src/ ./src/
 COPY ./main.py ./main.py
 
 # Launch application entrypoint
+RUN chmod +x ./docker-entrypoint.sh
 ENTRYPOINT ["./docker-entrypoint.sh"]

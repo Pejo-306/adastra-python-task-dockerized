@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   aptd:
-    image: penikolov23/adastra-python-task-dockerized
+    image: ${REGISTRY:-docker.io}/penikolov23/adastra-python-task-dockerized:${BUILD_TAG:-latest}
 
   postgres-db:
     image: postgres

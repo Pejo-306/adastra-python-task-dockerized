@@ -42,6 +42,18 @@ services:
     volumes:
       - "./data/jenkins:/var/jenkins_home"
       - "/var/run/docker.sock:/var/run/docker.sock"
+  
+  # NOTE: this registry is not secure and must be marked as
+  # insecure in the Docker engine's config
+  local-registry:
+    image: registry
+    restart: always
+    networks: 
+      - infrastructure-net
+    ports: 
+      - "5000:5000"
+    volumes: 
+      - "./data/registry:/var/lib/registry"
 
 networks: 
   infrastructure-net:

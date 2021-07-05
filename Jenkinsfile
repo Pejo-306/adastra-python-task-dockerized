@@ -1,5 +1,9 @@
 pipeline {
     agent any 
+    environment {
+        REGISTRY = "127.0.0.1:5000"
+        BUILD_TAG = "local"
+    }
     stages {
         stage("Verify") {
             steps {
@@ -43,6 +47,21 @@ pipeline {
                 }
                 failure {
                     echo "========Test failed========"
+                }
+            }
+        }
+        stage("Push to local registry") {
+            steps {
+                echo "========Start pushing project========"
+                sh "chmod +x ./CICD/stages/03-push.sh"
+                sh "./CICD/stages/03-push.sh"
+            }
+            post {
+                success {
+                    echo "========Push successful========"
+                }
+                failure {
+                    echo "========Push failed========"
                 }
             }
         }
