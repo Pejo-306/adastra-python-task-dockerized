@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  infrastructure-db:
+    image: postgres
+    healthcheck:
+      test: pg_isready -U postgres
+      interval: 10s
+      timeout: 5s 
+      retries: 5
+    networks: 
+      - infrastructure-net
+    ports: 
+      - "15432:5432"
+    env_file: 
+      - database.env
+    volumes:
+      - "./data/postgresql:/var/lib/postgresql"
+
+  gogs:
+    image: gogs/gogs
+    depends_on: 
+      infrastructure-db:
+        condition: service_healthy
+    networks: 
+      - infrastructure-net
+    ports: 
+      - "10022:22"
+      - "10080:3000"
+    volumes:
+      - "./data/gogs:/data"
+
+#  jenkins:
+#    image: jenkins/jenkins:lts
+#    networks: 
+#      - infrastructure-net
+#    ports:
+#      - "8090:8080"
+#      - "50000:50000"
+
+networks: 
+  infrastructure-net:
