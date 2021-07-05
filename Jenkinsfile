@@ -5,7 +5,8 @@ pipeline {
             steps {
                 echo "========Verifying system========"
                 dir("CICD/stages") {
-                    echo "Hello Jenkins from Gogs"
+                    sh "chmod +x ./00-verify.sh"
+                    sh "./00-verify.sh"
                 }
             }
             post {
