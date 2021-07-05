@@ -3,11 +3,9 @@ pipeline {
     stages {
         stage("Verify") {
             steps {
-                echo "========Verifying system========"
-                dir("CICD/stages") {
-                    sh "chmod +x ./00-verify.sh"
-                    sh "./00-verify.sh"
-                }
+                echo "========Start verifying system========"
+                sh "chmod +x ./CICD/stages/00-verify.sh"
+                sh "./CICD/stages/00-verify.sh"
             }
             post {
                 success {
@@ -18,12 +16,27 @@ pipeline {
                 }
             }
         }
+        stage("Test") {
+            steps {
+                echo "========Start testing project========"
+                sh "chmod +x ./CICD/stages/01-test.sh"
+                sh "./CICD/stages/01-test.sh"
+            }
+            post {
+                success {
+                    echo "========Test successful========"
+                }
+                failure {
+                    echo "========Test failed========"
+                }
+            }
+        }
     }
-    post{
-        success{
+    post {
+        success {
             echo "========pipeline executed successfully ========"
         }
-        failure{
+        failure {
             echo "========pipeline execution failed========"
         }
     }
