@@ -16,11 +16,26 @@ pipeline {
                 }
             }
         }
+        stage("Build") {
+            steps {
+                echo "========Start buildding project========"
+                sh "chmod +x ./CICD/stages/01-build.sh"
+                sh "./CICD/stages/01-build.sh"
+            }
+            post {
+                success {
+                    echo "========Build successful========"
+                }
+                failure {
+                    echo "========Build failed========"
+                }
+            }
+        }
         stage("Test") {
             steps {
                 echo "========Start testing project========"
-                sh "chmod +x ./CICD/stages/01-test.sh"
-                sh "./CICD/stages/01-test.sh"
+                sh "chmod +x ./CICD/stages/02-test.sh"
+                sh "./CICD/stages/02-test.sh"
             }
             post {
                 success {
