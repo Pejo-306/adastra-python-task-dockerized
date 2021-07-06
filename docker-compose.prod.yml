@@ -1,16 +1,51 @@
 version: "3.8"
 
+x-args: &aptd_service_config
+  image: penikolov23/adastra-python-task-dockerized
+  depends_on: 
+    postgres-db:
+      condition: service_healthy
+  networks:
+    - prod-net
+
+x-args: &aptd_service_deploy_config
+  rollback_config:
+    failure_action: continue
+    order: start-first
+    parallelism: 2
+  update_config:
+    failure_action: rollback
+    monitor: 60s
+    order: start-first
+    parallelism: 2
+
 services:
-  aptd:
-    image: penikolov23/adastra-python-task-dockerized
-    depends_on: 
-      postgres-db:
-        condition: service_healthy
-    networks:
-      - prod-net
+  aptd-consolesink:
+    <<: *aptd_service_config
     environment: 
       - TERM=xterm-color
       - APTD__ENV=PROD
+      - APTD__DATASOURCE="1"
+      - APTD__DATASINK="1\n(prod console)::key:{} | value:{} | ts:{}"
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          memory: 100M
+      <<: *aptd_service_deploy_config
+
+  aptd-postgresink:
+    <<: *aptd_service_config
+    environment: 
+      - APTD__ENV=PROD
+      - APTD__DATASOURCE="1"
+      - APTD__DATASINK="2\ndefault_schema\nuser\nuser\nhost.docker.internal\n5432"
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 75M
+      <<: *aptd_service_deploy_config
 
   postgres-db:
     networks:
