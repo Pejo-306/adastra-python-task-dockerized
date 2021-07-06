@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  aptd:
+    image: penikolov23/adastra-python-task-dockerized
+    depends_on: 
+      postgres-db:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    networks:
+      - prod-net
+    environment: 
+      - TERM=xterm-color
+      - APTD__ENV=DEV
+
+  postgres-db:
+    networks:
+      - prod-net
+
+networks:
+  prod-net:

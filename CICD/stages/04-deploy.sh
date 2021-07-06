@@ -1,0 +1,1 @@
+docker-compose --host "ssh://$PROD_ENGINE" -f docker-compose.yml -f docker-compose.prod.yml up -d

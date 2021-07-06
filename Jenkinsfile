@@ -3,6 +3,7 @@ pipeline {
     environment {
         REGISTRY = "127.0.0.1:5000"
         BUILD_TAG = "local"
+        PROD_ENGINE = "ip172-18-0-103-c3i18nnqf8u0009o84t0@direct.labs.play-with-docker.com"
     }
     stages {
         stage("Verify") {
@@ -62,6 +63,26 @@ pipeline {
                 }
                 failure {
                     echo "========Push failed========"
+                }
+            }
+        }
+        stage("Await approval to deploy") {
+            steps {
+                input message: "Deploy to production?"
+            }
+        }
+        stage("Deploy") {
+            steps {
+                echo "========Start deploying to production========"
+                sh "chmod +x ./CICD/stages/04-deploy.sh"
+                sh "./CICD/stages/04-deploy.sh"
+            }
+            post {
+                success {
+                    echo "========Deployment successful========"
+                }
+                failure {
+                    echo "========Deployment failed========"
                 }
             }
         }
