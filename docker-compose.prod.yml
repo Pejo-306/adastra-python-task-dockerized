@@ -1,10 +1,13 @@
 version: "3.8"
 
+x-args: &aptd_service_common
+  image: penikolov23/adastra-python-task-dockerized
+  networks:
+    - prod-net
+
 services:
   aptd:
-    image: penikolov23/adastra-python-task-dockerized
-    networks:
-      - prod-net
+    <<: *aptd_service_common  
     environment: 
       - TERM=xterm-color
       - APTD__ENV=PROD
@@ -17,19 +20,20 @@ services:
           cpus: "0.5"
           memory: 100M
 
-
-#   aptd-postgresink:
-#    <<: *aptd_service_config
-#    environment: 
-#      - APTD__ENV=PROD
-#      - APTD__DATASOURCE="1"
-#      - APTD__DATASINK="2\ndefault_schema\nuser\nuser\nhost.docker.internal\n5432"
-#    deploy:
-#      replicas: 2
-#      resources:
-#        limits:
-#          memory: 75M
-#      <<: *aptd_service_deploy_config
+  aptd-postgresink:
+    <<: *aptd_service_common  
+    extra_hosts: 
+      - "host.docker.internal:host-gateway"
+    environment: 
+      - APTD__ENV=PROD
+      - APTD__DATASOURCE=1
+      - APTD__DATASINK=2\ndefault_schema\nuser\nuser\nhost.docker.internal\n5432
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 75M
 
   postgres-db:
     networks:
