@@ -36,8 +36,22 @@ services:
           memory: 75M
 
   postgres-db:
+    image: postgres
+    env_file:
+      - database.env
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 100M
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
     networks:
       - prod-net
 
 networks:
   prod-net:
+      
+volumes:
+  postgres_prod_data:
