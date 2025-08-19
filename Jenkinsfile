@@ -1,9 +1,11 @@
 pipeline {
     agent any 
+    parameters {
+        string(name: 'PROD_ENGINE', defaultValue: '', description: 'SSH target for Docker Swarm, e.g. ip172-18-0-38-xxxx@direct.labs.play-with-docker.com')
+    }
     environment {
         REGISTRY = "127.0.0.1:5000"
         BUILD_TAG = "local"
-        PROD_ENGINE = "ip172-18-0-38-c3i9bd7njsv000fin8l0@direct.labs.play-with-docker.com"
     }
     stages {
         stage("Verify") {
