@@ -1,0 +1,55 @@
+services:
+  aptd:
+    image: penikolov23/adastra-python-task-dockerized
+    environment:
+      TERM: xterm-color
+      APTD__ENV: PROD
+      APTD__DATASOURCE: '1'
+      APTD__DATASINK: "1\n(prod console)::key:{} | value:{} | ts:{}"
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 100M
+    networks:
+      - prod-net
+
+  aptd-postgresink:
+    image: penikolov23/adastra-python-task-dockerized
+    environment:
+      APTD__ENV: PROD
+      APTD__DATASOURCE: '1'
+      APTD__DATASINK: "2\ndefault_schema\nuser\nuser\nhost.docker.internal\n5432"
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 75M
+    networks:
+      - prod-net
+
+  postgres-db:
+    image: postgres
+    environment:
+      POSTGRES_DB: default_schema
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_HOST: host.docker.internal
+      POSTGRES_PORT: "5432"
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+    networks:
+      - prod-net
+
+networks:
+  prod-net:
+
+volumes:
+  postgres_prod_data:
+
