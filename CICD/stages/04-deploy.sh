@@ -6,7 +6,8 @@ set -x  # <— turn on bash debug mode (prints every command before running it)
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml config \
   | sed -E "s/cpus: ([0-9\\.]+)/cpus: '\\1'/" \
   | sed '/^version:/d' \
-  | sed '/^x-/,/^services:/d' \
+  | sed '/^x-/d' \
+  | sed '/^name:/d' \
   > docker-compose.prod-swarm.yml
 
 # Show the generated file for debugging
