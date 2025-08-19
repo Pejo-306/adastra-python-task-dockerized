@@ -8,11 +8,6 @@ services:
     image: postgres
     env_file:
       - database.env
-    ports:
-      - target: 5432
-        published: 5432
-        protocol: tcp
-        mode: host
     healthcheck:
       test: pg_isready -U postgres
       interval: 10s
