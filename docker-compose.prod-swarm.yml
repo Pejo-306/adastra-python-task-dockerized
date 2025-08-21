@@ -21,7 +21,18 @@ services:
       APTD__ENV: PROD
       APTD__DATASOURCE: '1'
       APTD__DATASINK: "2\ndefault_schema\nuser\nuser\nsink-db\n5432"
+    command: >
+        sh -lc '
+          for i in $(seq 1 30); do
+            pg_isready -h sink-db -p 5432 -U user && echo "Postgres is ready ✅" && break;
+            echo "waiting for postgres... ($i/30)";
+            sleep 2;
+          done;
+          exec "$@"
+        '
     deploy:
+      restart_policy:
+        condition: on-failure
       replicas: 2
       resources:
         limits:
@@ -40,6 +51,11 @@ services:
       - postgres_prod_data:/var/lib/postgresql/data
     deploy:
       replicas: 1
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       prod-net:
         aliases:
