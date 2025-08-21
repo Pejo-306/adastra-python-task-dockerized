@@ -20,7 +20,7 @@ services:
     environment:
       APTD__ENV: PROD
       APTD__DATASOURCE: '1'
-      APTD__DATASINK: "2\ndefault_schema\nuser\nuser\n${STACK_NAME}_postgres-db\n5432"
+      APTD__DATASINK: "2\ndefault_schema\nuser\nuser\nsink-db\n5432"
     deploy:
       replicas: 2
       resources:
@@ -41,10 +41,13 @@ services:
     deploy:
       replicas: 1
     networks:
-      - prod-net
+      prod-net:
+        aliases:
+          - sink-db
 
 networks:
   prod-net:
+    driver: overlay
 
 volumes:
   postgres_prod_data:
