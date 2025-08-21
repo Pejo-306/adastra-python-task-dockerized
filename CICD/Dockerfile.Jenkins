@@ -12,14 +12,12 @@ RUN curl -L "https://github.com/docker/compose/releases/latest/download/docker-c
     -o /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose
 
-# === Generate SSH keys (used by your pipeline scripts) ===
-# RUN ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -N ""
-# Ensure required tools are present
+# === Ensure required tools are present ===
 RUN apt-get update && \
     apt-get install -y --no-install-recommends openssh-client iproute2 && \
     rm -rf /var/lib/apt/lists/*
 
-# Generate key, add known_hosts (best-effort), print PUBLIC key
+# === Generate SSH keys, add known_hosts (best-effort), print PUBLIC key ===
 RUN set -eux; \
     mkdir -p /root/.ssh; \
     ssh-keygen -t ed25519 -f /root/.ssh/id_ed25519 -N ""; \
