@@ -20,9 +20,7 @@ services:
     environment:
       APTD__ENV: PROD
       APTD__DATASOURCE: '1'
-      APTD__DATASINK: "2\ndefault_schema\nuser\nuser\nhost.docker.internal\n5432"
-    extra_hosts:
-      - host.docker.internal:host-gateway
+      APTD__DATASINK: "2\ndefault_schema\nuser\nuser\npostgres-db\n5432"
     deploy:
       replicas: 2
       resources:
@@ -38,8 +36,6 @@ services:
       POSTGRES_DB: default_schema
       POSTGRES_USER: user
       POSTGRES_PASSWORD: user
-      POSTGRES_HOST: host.docker.internal
-      POSTGRES_PORT: "5432"
     volumes:
       - postgres_prod_data:/var/lib/postgresql/data
     deploy:
