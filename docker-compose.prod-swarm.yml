@@ -21,15 +21,6 @@ services:
       APTD__ENV: PROD
       APTD__DATASOURCE: '1'
       APTD__DATASINK: "2\ndefault_schema\nuser\nuser\nsink-db\n5432"
-    command: >
-        sh -lc '
-          for i in $(seq 1 30); do
-            pg_isready -h sink-db -p 5432 -U user && echo "Postgres is ready ✅" && break;
-            echo "waiting for postgres... ($i/30)";
-            sleep 2;
-          done;
-          exec "$@"
-        '
     deploy:
       restart_policy:
         condition: on-failure
