@@ -14,5 +14,5 @@ export DOCKER_SSH_COMMAND="ssh -i $KEY -o IdentitiesOnly=yes -o StrictHostKeyChe
 docker info > /dev/null
 
 # Deploy the stack (no need to copy the file manually)
-docker stack deploy -c "$STACK_FILE" "$STACK_NAME"
+STACK_NAME=$STACK_NAME docker stack deploy -c "$STACK_FILE" "$STACK_NAME"
 

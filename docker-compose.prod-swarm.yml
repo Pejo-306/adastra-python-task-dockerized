@@ -20,7 +20,7 @@ services:
     environment:
       APTD__ENV: PROD
       APTD__DATASOURCE: '1'
-      APTD__DATASINK: "2\ndefault_schema\nuser\nuser\naptd-prod_postgres-db\n5432"
+      APTD__DATASINK: "2\ndefault_schema\nuser\nuser\n${STACK_NAME}_postgres-db\n5432"
     deploy:
       replicas: 2
       resources:
