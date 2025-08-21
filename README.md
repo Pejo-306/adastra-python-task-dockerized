@@ -16,7 +16,7 @@ during my junior position in **Adastra Bulgaria**.
     * [Deploy Compose Application](#deploy-compose-application)
     * [Install Jenkins](#install-jenkins)
     * [Setup Gogs](#setup-gogs)
-  - [Create Play-with-Docker External Docker Swarm](#create-play-with-docker-external-swarm)
+  - [Create Play-with-Docker External Docker Swarm](#create-play-with-docker-external-docker-swarm)
   - [Deploy Application](#deploy-application)
     * [Upload codebase to Gogs](#upload-codebase-to-gogs)
     * [Create Pipeline Job](#create-pipeline-job)
