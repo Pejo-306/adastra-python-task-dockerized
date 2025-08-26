@@ -1,6 +1,6 @@
-# Simple Pseudo ETL System - Dockerized
+# CI/CD Pipeline for Lightweight ETL System
 
-Local CI/CD pipeline for [Simple Pseudo ETL System](https://github.com/Pejo-306/adastra-python-task)
+Local CI/CD pipeline for [Lightweight ETL System](https://github.com/Pejo-306/adastra-python-task)
 which packages the application in a Docker image and ships it to an external
 Docker Swarm network. Developed as part of an internal training on Docker
 during my junior position in **Adastra Bulgaria**.
@@ -28,13 +28,13 @@ during my junior position in **Adastra Bulgaria**.
 ## Overview
 
 The goal of this project is to streamline the software development process of the
-application [Simple Pseudo ETL System](https://github.com/Pejo-306/adastra-python-task)
+application [Lightweight ETL System](https://github.com/Pejo-306/adastra-python-task)
 via a CI/CD pipeline. The pipeline streamlines development by automatically 
 pulling developer changes, testing application, and deploying updates to a production
 environment (in this case - a small Docker Swarm).
 
 The specifics of the deployed application isn't explored in this README. See
-[Simple Pseudo ETL System](https://github.com/Pejo-306/adastra-python-task) for
+[Lightweight ETL System](https://github.com/Pejo-306/adastra-python-task) for
 more details. The application will be viewed as a black box.
 
 This project's CI/CD pipeline is deployed on a local Docker engine and consists of:
@@ -366,7 +366,7 @@ Click "Proceed".
 If all is successful the pipeline overview should display green on all stages.
 
 Play with Docker's remote Docker Swarm is now running the application
-[Simple Pseudo ETL System](https://github.com/Pejo-306/adastra-python-task)...
+[Lightweight ETL System](https://github.com/Pejo-306/adastra-python-task)...
 
 ## Explore Orchestration
 
@@ -423,7 +423,7 @@ Feel free to explore the application on your own...
 
 ## Built with
 
-* [Simple Pseudo ETL System](https://github.com/Pejo-306/adastra-python-task)
+* [Lightweight ETL System](https://github.com/Pejo-306/adastra-python-task)
 * [Docker](https://www.docker.com/) and [Docker Compose](https://github.com/docker/compose)
 * [Play with Docker](https://labs.play-with-docker.com/)
 * [Gogs](https://gogs.io/)
